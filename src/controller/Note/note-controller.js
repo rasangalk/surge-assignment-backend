@@ -41,3 +41,18 @@ exports.updateNote = (req, res) => {
     });
   }
 };
+
+// Note deletion function
+exports.deleteNote = (req, res) => {
+  // Return note id from user's request params
+  const { noteId } = req.params;
+
+  // Find the note using note id and delete
+  Note.findOneAndDelete({ _id: noteId })
+    .then((result) => {
+      res.status(200).json(result);
+    })
+    .catch((error) => {
+      res.status(400).json({ error });
+    });
+};
