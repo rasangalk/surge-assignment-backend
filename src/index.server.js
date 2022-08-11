@@ -17,10 +17,12 @@ mongoose
 
 // Routes
 const userRoutes = require("./routes/user-routes");
+const noteRoutes = require("./routes/note-routes");
 
 app.use(express.json());
 
 app.use("/api", userRoutes);
+app.use("/api/", noteRoutes);
 
 app.listen(process.env.PORT, () => {
   console.log(`Server is running on port ${process.env.PORT}`);
