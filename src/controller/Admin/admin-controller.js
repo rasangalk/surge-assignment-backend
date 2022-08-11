@@ -53,3 +53,26 @@ exports.createUser = async (req, res) => {
       });
   });
 };
+
+// Returning users with pagination
+exports.getAllUsers = async (req, res) => {
+  try {
+    // Defining users limit in a page and page number
+
+    const { page = 1, limit = 10 } = req.query;
+
+    // Return notes
+
+    const users = await User.find()
+
+      .limit(limit * 1)
+
+      .skip((page - 1) * limit);
+
+    res.status(200).json({ total: users.length, users });
+  } catch (err) {
+    res.status(500).json({
+      error: err,
+    });
+  }
+};
