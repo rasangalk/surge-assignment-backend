@@ -62,3 +62,27 @@ exports.login = async (req, res) => {
       .json({ message: "Check the email address and try again!" });
   }
 };
+
+// User profile update function
+exports.updateProfile = (req, res) => {
+  // Return user id from user's request param
+  const { profileId } = req.params;
+
+  if (profileId) {
+    // Update following fields in the user profile
+    User.findOneAndUpdate(
+      { _id: profileId },
+      {
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        dateOfBirth: req.body.dateOfBirth,
+        mobile: req.body.mobile,
+      }
+    ).exec((error, result) => {
+      if (error) return res.status(400).json({ error });
+      if (result) {
+        res.status(202).json({ result });
+      }
+    });
+  }
+};
