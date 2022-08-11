@@ -1,0 +1,22 @@
+{
+  "name": "surge-assignment-backend",
+  "version": "1.0.0",
+  "description": "Backend application for the assignment of surge global software engineering internship program",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon ./src/index.server.js"
+  },
+  "author": "rasanga lakshith",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
+    "express-validator": "^6.14.2",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.5.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.19"
+  }
+}
