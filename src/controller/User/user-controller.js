@@ -77,6 +77,7 @@ exports.updateProfile = (req, res) => {
         lastName: req.body.lastName,
         dateOfBirth: req.body.dateOfBirth,
         mobile: req.body.mobile,
+        password: req.body.password,
       }
     ).exec((error, result) => {
       if (error) return res.status(400).json({ error });
