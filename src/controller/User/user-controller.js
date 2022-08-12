@@ -1,5 +1,6 @@
 const User = require("../../models/user");
 const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
 
 // User login function
 exports.login = async (req, res) => {
@@ -69,21 +70,35 @@ exports.updateProfile = (req, res) => {
   const { profileId } = req.params;
 
   if (profileId) {
+    const saltRounds = 10;
+    let pw;
+
+    // Password hashing
+    bcrypt
+      .genSalt(saltRounds)
+      .then((salt) => {
+        pw = bcrypt.hash(req.body.password, salt);
+        return pw;
+      })
+      .then((pass) => {
+        User.findOneAndUpdate(
+          { _id: profileId },
+          {
+            firstName: req.body.firstName,
+            lastName: req.body.lastName,
+            dateOfBirth: req.body.dateOfBirth,
+            mobile: req.body.mobile,
+            status: req.body.status,
+            password: pass,
+          }
+        ).exec((error, result) => {
+          if (error) return res.status(400).json({ error });
+          if (result) {
+            res.status(202).json({ result });
+          }
+        });
+      });
+
     // Update following fields in the user profile
-    User.findOneAndUpdate(
-      { _id: profileId },
-      {
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
-        dateOfBirth: req.body.dateOfBirth,
-        mobile: req.body.mobile,
-        password: req.body.password,
-      }
-    ).exec((error, result) => {
-      if (error) return res.status(400).json({ error });
-      if (result) {
-        res.status(202).json({ result });
-      }
-    });
   }
 };
