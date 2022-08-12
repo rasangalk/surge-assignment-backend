@@ -124,3 +124,18 @@ exports.UserPagination = async (req, res) => {
     res.status(500).json({ error: true, message: "Internal server error" });
   }
 };
+
+// User select
+exports.UserSelect = async (req, res) => {
+  const { userId } = req.params;
+  if (userId) {
+    User.findOne({ _id: userId }).exec((error, details) => {
+      if (error) return res.status(400).json({ error });
+      if (details) {
+        res.status(201).json({ details });
+      }
+    });
+  } else {
+    return res.status(400).json({ error: "Params required" });
+  }
+};
