@@ -19,6 +19,7 @@ mongoose
 const userRoutes = require("./routes/user-routes");
 const noteRoutes = require("./routes/note-routes");
 
+app.use(cors());
 app.use(express.json());
 
 app.use("/api", userRoutes);
