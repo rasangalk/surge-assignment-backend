@@ -54,25 +54,73 @@ exports.createUser = async (req, res) => {
   });
 };
 
-// Returning users with pagination
-exports.getAllUsers = async (req, res) => {
+// Users pagination and search
+exports.UserPagination = async (req, res) => {
   try {
-    // Defining users limit in a page and page number
+    // Page number
+    const page = parseInt(req.query.page) - 1 || 0;
 
-    const { page = 1, limit = 10 } = req.query;
+    // Number of users in a page
+    const limit = parseInt(req.query.limit) || 5;
 
-    // Return notes
+    // Fist name
+    const first = req.query.first;
 
-    const users = await User.find()
+    // Last name
+    const second = req.query.second;
 
-      .limit(limit * 1)
+    // Email
+    const email = req.query.email;
 
-      .skip((page - 1) * limit);
+    let users;
 
-    res.status(200).json({ total: users.length, users });
+    // Search by first name
+    if (first != null) {
+      users = await User.find({
+        firstName: { $regex: first, $options: "i" },
+      })
+        .skip(page * limit)
+        .limit(limit);
+    }
+    // Search by last name
+    else if (second != null) {
+      users = await User.find({
+        lastName: { $regex: second, $options: "i" },
+      })
+        .skip(page * limit)
+        .limit(limit);
+    }
+    // Search by email
+    else if (email != null) {
+      users = await User.find({
+        email: { $regex: email, $options: "i" },
+      })
+        .skip(page * limit)
+        .limit(limit);
+    }
+
+    // Without filtering
+    else {
+      users = await User.find()
+        .skip(page * limit)
+        .limit(limit);
+    }
+
+    // Total number of documents in user collection
+    const total = await User.countDocuments();
+
+    // Response
+    const response = {
+      error: false,
+      total,
+      page: page + 1,
+      limit,
+      users,
+    };
+
+    res.status(200).json(response);
   } catch (err) {
-    res.status(500).json({
-      error: err,
-    });
+    console.log(err);
+    res.status(500).json({ error: true, message: "Internal server error" });
   }
 };

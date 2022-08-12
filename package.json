@@ -4,7 +4,8 @@
   "description": "Backend application for the assignment of surge global software engineering internship program",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon ./src/index.server.js"
+    "start": "nodemon ./src/index.server.js",
+    "test": "jest"
   },
   "author": "rasanga lakshith",
   "license": "ISC",
@@ -17,6 +18,8 @@
     "mongoose": "^6.5.2"
   },
   "devDependencies": {
-    "nodemon": "^2.0.19"
+    "jest": "^28.1.3",
+    "nodemon": "^2.0.19",
+    "supertest": "^6.2.4"
   }
 }
