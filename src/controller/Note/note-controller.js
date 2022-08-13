@@ -60,17 +60,34 @@ exports.deleteNote = (req, res) => {
 // Returning notes with pagination for a given user id
 exports.getAllNotes = async (req, res) => {
   try {
-    // Defining notes limit in a page and page number
-    const { page = 1, limit = 5 } = req.query;
+    // Page number
+    const page = parseInt(req.query.page) - 1 || 0;
+
+    // Number of notes in a page
+    const limit = 6;
 
     // Defining user id from user's request body
-    const { userId } = req.body;
+    const { userId } = req.params;
+
+    let notes;
 
     // Return notes
-    const notes = await Note.find({ userId: userId })
-      .limit(limit * 1)
-      .skip((page - 1) * limit);
-    res.status(200).json({ total: notes.length, notes });
+    notes = await Note.find({ userId: userId })
+      .skip(page * limit)
+      .limit(limit);
+
+    // Total number of docs
+    const total = await Note.countDocuments();
+
+    // Response
+    const response = {
+      total,
+      page: page + 1,
+      limit,
+      notes,
+    };
+
+    res.status(200).json(response);
   } catch (err) {
     res.status(500).json({
       error: err,

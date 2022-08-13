@@ -17,6 +17,6 @@ router.patch("/note/:noteId", updateNote);
 router.delete("/note/:noteId", deleteNote);
 
 // Notes returning route
-router.get("/note", getAllNotes);
+router.get("/note/:userId", getAllNotes);
 
 module.exports = router;
