@@ -94,3 +94,18 @@ exports.getAllNotes = async (req, res) => {
     });
   }
 };
+
+// Return selected note
+exports.NoteSelect = async (req, res) => {
+  const { noteId } = req.params;
+  if (noteId) {
+    Note.findOne({ _id: noteId }).exec((error, details) => {
+      if (error) return res.status(400).json({ error });
+      if (details) {
+        res.status(201).json({ details });
+      }
+    });
+  } else {
+    return res.status(400).json({ error: "Params required" });
+  }
+};

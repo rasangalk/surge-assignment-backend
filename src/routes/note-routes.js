@@ -4,6 +4,7 @@ const {
   updateNote,
   deleteNote,
   getAllNotes,
+  NoteSelect,
 } = require("../controller/Note/note-controller");
 const router = express.Router();
 
@@ -18,5 +19,8 @@ router.delete("/note/:noteId", deleteNote);
 
 // Notes returning route
 router.get("/note/:userId", getAllNotes);
+
+// Return selected note route
+router.get("/select-note/:noteId", NoteSelect);
 
 module.exports = router;
