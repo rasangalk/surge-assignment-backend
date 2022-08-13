@@ -1,9 +1,9 @@
 # How to install and start the application
 
-1. first download and install the backend application from : https://github.com/rasangalk/surge-assignment-backend
+1. first download and install the backend application 
 2. Backend application will run on port 2000
 3. use 'npm start' in the backend terminal to start the server
-4. then download and install the frontend application
+4. then download and install the frontend application from : https://github.com/rasangalk/surge-assignment-frontend
 5. use 'yarn start' in the frontend terminal to start the application
 6. now the both backend and frontend applications are running
 
