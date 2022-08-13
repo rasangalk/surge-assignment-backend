@@ -61,7 +61,7 @@ exports.deleteNote = (req, res) => {
 exports.getAllNotes = async (req, res) => {
   try {
     // Defining notes limit in a page and page number
-    const { page = 1, limit = 10 } = req.query;
+    const { page = 1, limit = 5 } = req.query;
 
     // Defining user id from user's request body
     const { userId } = req.body;
